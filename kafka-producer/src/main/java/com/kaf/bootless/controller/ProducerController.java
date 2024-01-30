@@ -17,9 +17,10 @@ public class ProducerController {
         this.producer = producer;
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/{message}")
-    public void send(@PathVariable("message") String message) {
-        System.out.format("Message received: %s\n", message);
-        producer.sendMessage(message);
+    @RequestMapping(method = RequestMethod.POST, path = "/{id}/{name}")
+    public void send(@PathVariable("id") String id,
+                     @PathVariable("name") String name) {
+        System.out.format("Message received: %s, %s\n", id, name);
+        producer.sendMessage(id, name);
     }
 }

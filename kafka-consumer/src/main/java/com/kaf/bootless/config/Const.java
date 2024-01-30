@@ -9,7 +9,6 @@ public final class Const {
     public static final String GROUP_NAME = "group1";
     public static final String TOPIC_PROP_CONF = "topic";
     public static final String SCHEMA_PROP_CONF = "SCHEMA";
-    public static final String CONTEXT_PATH = "/";
-    public static final String APP_BASE = ".";
-    public static final int DEFAULT_PORT = 8080;
+
+    public static final String SCHEMA_REGISTRY_URL = "0.0.0.0:8081";
 }

@@ -6,7 +6,7 @@ import org.apache.catalina.startup.Tomcat;
 
 import javax.servlet.ServletException;
 
-public class Main {
+public class ProducerMain {
     public static void main(String[] args) throws LifecycleException, ServletException {
         Tomcat tomcat = new Tomcat();
         tomcat.addWebapp(Const.CONTEXT_PATH, Const.APP_BASE);
