@@ -1,4 +1,4 @@
-## The project was made to test the basic functionality of Kafka along with Avro schema based on Java 7
+## The project was made to test the basic functionality of Kafka along with Avro schema based on Java 7 and Spring MVC (without Spring Boot)
 #### To start the project you need to have:
 - Set in the project or install on your computer Java 7
 - [Kafka](https://kafka.apache.org/downloads)
