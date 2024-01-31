@@ -1,7 +1,6 @@
 package com.kaf.bootless;
 
 import com.kaf.bootless.config.Const;
-import com.kaf.bootless.repository.SchemaRepository;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -22,7 +21,7 @@ public class ConsumerMain {
         Properties properties = consumerConfig();
 
         // create consumer
-        final KafkaConsumer<String, User> consumer = new KafkaConsumer<>(properties);
+        final KafkaConsumer<String, Model> consumer = new KafkaConsumer<>(properties);
 
         // get a reference to the current thread
         final Thread mainThread = Thread.currentThread();
@@ -49,8 +48,8 @@ public class ConsumerMain {
 
             // poll for new data
             while (true) {
-                ConsumerRecords<String, User> records = consumer.poll(100);
-                for (ConsumerRecord<String, User> record : records) {
+                ConsumerRecords<String, Model> records = consumer.poll(100);
+                for (ConsumerRecord<String, Model> record : records) {
                     System.out.println("Key: " + record.key() + ", Value: " + record.value());
                     System.out.println("Partition: " + record.partition() + ", Offset:" + record.offset());
                 }
@@ -70,24 +69,13 @@ public class ConsumerMain {
 
     private static Properties consumerConfig() {
         Properties properties = new Properties();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, Const.KAFKA_URL);
-
-        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-//        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, AvroRecordDeserializer.class);
-
-        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
-        properties.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, Const.SCHEMA_REGISTRY_URL);
-
-        properties.put(Const.SCHEMA_PROP_CONF, SchemaRepository.instance().getSchemaObject());
         properties.put(Const.TOPIC_PROP_CONF, Const.TOPIC_NAME);
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, Const.GROUP_NAME);
-
-        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
-        properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
-        properties.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "15000");
-
-//        properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, Const.KAFKA_URL);
+        properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
+        properties.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, Const.SCHEMA_REGISTRY_URL);
         return properties;
     }
 }

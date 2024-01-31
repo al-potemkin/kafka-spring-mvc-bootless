@@ -1,14 +1,10 @@
 {
   "type": "record",
   "namespace": "com.kaf.bootless",
-  "name": "User",
+  "name": "Model",
   "fields": [
     {
-      "name": "id",
-      "type": "int"
-    },
-    {
-      "name": "name",
+      "name": "message",
       "type": "string"
     }
   ]
